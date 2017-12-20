@@ -1,0 +1,56 @@
+<head>
+	<script src='https://cdn.bootcss.com/socket.io/1.3.2/socket.io.js'></script>
+	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<script type='text/javascript'>
+	postedID = [];
+	socket = io.connect('https://danmaku.hfi.me');
+	function send()
+	{
+		headers = {
+			'sign': 'be779f65b7fb27256228cad4002d823a',
+			'timestamp': Math.floor(Date.now() / 1000),
+			'token': 'TjhUaHZDV1dSR0pHWDlBMm9YZFdmUDBLQlpoaWtab2J4NFEyakc5cXM9',
+			'account-id': '671044'
+		};
+		$.ajax({
+			url: 'http://geizan.cc/api/v2/wallet/income?page=1&page_size=20',
+			headers: headers,
+			method: 'GET',
+			success: function (msg) {
+				var info = msg.data;
+				$.each(info, function () {
+					if (postedID.indexOf(this.id) === -1) {
+						text = this.account.nickname + '捐了' + this.amount/100 + '🐂';
+						amount = this.amount/50;
+						if(amount<10)
+						{
+							size = 25 + Math.floor(Math.random()*20);
+						}
+						else
+						{
+							size = 40 + Math.floor(amount/3 + Math.random()*20);
+						}
+						dmk = {
+							'mode': 1,
+							'text': text,
+							'stime': 0,
+							'size': size,
+							'color': 16711680,
+							'dur': 10000
+						};
+						postedID.push(this.id);
+						socket.emit('danmaku send', JSON.stringify(dmk));
+					}
+				});
+			}
+		});
+	}
+
+	$(document).ready(function () {
+		send();
+		setInterval("send()",5000);
+	});
+	</script>
+</body>

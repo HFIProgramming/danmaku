@@ -15,17 +15,15 @@ html
                     #popupMenu_font(data-role='popup', data-theme='b',data-overlay-theme='b', style='min-width:210px;')
                         ul(data-role='listview')
                             each val, index in sizes
-                                if index < 4
-                                    li
-                                        a(data-rel='back',danmaku-size=val.size)= val.title
+                                li
+                                    a(data-rel='back',danmaku-size=val.size)= val.title
                     a#mode.ui-btn.ui-btn-inline.ui-block-b(href='#popupMenu_mode', data-rel='popup', data-transition='pop',data-position-to="window",danmaku-mode= modes[inits.mode].mode  )= modes[inits.mode].title
                     #popupMenu_mode(data-role='popup', data-theme='b',data-overlay-theme='b', style='min-width:210px;')
 
                         ul(data-role='listview')
                             each val, index in modes
-                                if index < 2
-                                    li
-                                        a(data-rel='back',danmaku-mode=val.mode)= val.title
+                                li
+                                    a(data-rel='back',danmaku-mode=val.mode)= val.title
                     a#color.ui-btn.ui-btn-inline.ui-block-c(href='#popupMenu_color', data-rel='popup', data-transition='pop',data-position-to="window",danmaku-color= colors[inits.color].color  )= colors[inits.color].title
                     #popupMenu_color(data-role='popup', data-theme='b',data-overlay-theme='b', style='min-width:210px;')
                         .ui-grid-b
